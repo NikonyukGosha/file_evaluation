@@ -6,8 +6,10 @@ public class FileProcessorFactory {
             return new PlainTextFileReaderAdapter();
         } else if (path.endsWith(".xml")){
             return new XmlFileReaderAdapter();
-        } else if(path.endsWith(".json")){
+        } else if (path.endsWith(".json")){
             return new JsonFileReaderAdapter();
+        } else if (path.endsWith(".html")){
+            return new PlainTextFileReaderAdapter();
         } else {
             throw new IllegalArgumentException("Unsupported input file type: " + path);
         }
@@ -20,6 +22,8 @@ public class FileProcessorFactory {
             return new XmlFileWriterAdapter();
         } else if (path.endsWith(".json")){
             return new JsonFileWriterAdapter();
+        } else if (path.endsWith(".html")) {
+            return new PlainTextFileWriterAdapter();
         } else {
             throw new IllegalArgumentException("Unsupported output file type" + path);
         }

@@ -13,7 +13,7 @@ import static junit.framework.Assert.assertTrue;
 public class XmlFileReaderTest {
 
     @Test
-    void testReadXmlFile() throws IOException{
+    void testReadXmlFile() throws IOException {
         String xmlContent = """
                 <expressions>
                     <expr>1 + 2</expr>
