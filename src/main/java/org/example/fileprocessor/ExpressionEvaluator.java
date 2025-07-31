@@ -1,32 +1,32 @@
 package org.example.fileprocessor;
 
 public class ExpressionEvaluator {
-public static String evaluate(String input) {
+    public static String evaluate(String input) {
 
-    String[] tokens = input.split(" ");
-    StringBuilder result = new StringBuilder();
+        String[] tokens = input.split(" ");
+        StringBuilder result = new StringBuilder();
 
-    for (int i = 0; i < tokens.length; i++) {
-        String current = tokens[i];
+        for (int i = 0; i < tokens.length; i++) {
+            String current = tokens[i];
 
-        if (isNumeric(current)) {
-            if (i + 2 < tokens.length && isOperator(tokens[i + 1]) && isNumeric(tokens[i + 2])) {
-                int a = Integer.parseInt(tokens[i]);
-                String op = tokens[i + 1];
-                int b = Integer.parseInt(tokens[i + 2]);
-                int eval = calc(a, op, b);
-                result.append(eval).append(" ");
-                i += 2;
+            if (isNumeric(current)) {
+                if (i + 2 < tokens.length && isOperator(tokens[i + 1]) && isNumeric(tokens[i + 2])) {
+                    int a = Integer.parseInt(tokens[i]);
+                    String op = tokens[i + 1];
+                    int b = Integer.parseInt(tokens[i + 2]);
+                    int eval = calc(a, op, b);
+                    result.append(eval).append(" ");
+                    i += 2;
+                } else {
+                    result.append(current).append(" ");
+                }
             } else {
                 result.append(current).append(" ");
             }
-        } else {
-            result.append(current).append(" ");
         }
-    }
 
-    return result.toString().trim();
-}
+        return result.toString().trim();
+    }
 
 
     private static boolean isNumeric(String s) {
@@ -47,4 +47,3 @@ public static String evaluate(String input) {
         };
     }
 }
-

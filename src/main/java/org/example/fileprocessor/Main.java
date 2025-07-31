@@ -5,6 +5,9 @@ import org.example.fileprocessor.XMLfiles.XmlFileWriter;
 import org.example.fileprocessor.model.Config;
 import org.example.fileprocessor.plainText.FileReader;
 import org.example.fileprocessor.plainText.FileWriter;
+import org.example.fileprocessor.processing.FileProcessorFactory;
+import org.example.fileprocessor.processing.InputFileReader;
+import org.example.fileprocessor.processing.OutputFileWriter;
 
 public class Main {
     public static void main(String[] args) {
@@ -13,25 +16,13 @@ public class Main {
         String inputPath = config.getInputPath();
         String outputPath = config.getOutputPath();
 
-        String content;
+        InputFileReader reader = FileProcessorFactory.getReader(inputPath);
+        OutputFileWriter writer = FileProcessorFactory.getWriter(outputPath);
 
-        if (inputPath.endsWith(".xml")) {
-            content = XmlFileReader.readFile(inputPath);
-        } else if (inputPath.endsWith(".txt")) {
-            content = FileReader.readFile(inputPath);
-        } else {
-            throw new IllegalArgumentException("Unsupported input file format");
-        }
-
+        String content = reader.read(inputPath);
         String processed = ExpressionEvaluator.evaluate(content);
 
-        if (outputPath.endsWith(".xml")) {
-            XmlFileWriter.writeFile(outputPath, processed);
-        } else if (outputPath.endsWith(".txt")) {
-            FileWriter.writeFile(outputPath, processed);
-        } else {
-            throw new IllegalArgumentException("Unsupported output file format");
-        }
+        writer.write(outputPath, processed);
 
         System.out.println("Processing done!");
 
