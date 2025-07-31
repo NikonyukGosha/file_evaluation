@@ -8,12 +8,19 @@ import java.nio.file.Files;
 import java.nio.file.Path;
 import java.nio.file.Paths;
 
+import io.qameta.allure.*;
+
 import static junit.framework.Assert.assertTrue;
 
+@Epic("Xml File Reader")
+@Feature("Reading Xml Files")
+@Story("Read simple xml files with expressions")
 public class XmlFileReaderTest {
 
     @Test
-    void testReadXmlFile() throws IOException{
+    @Description("Main Xml file reader test")
+    @Severity(SeverityLevel.MINOR)
+    void testReadXmlFile() throws IOException {
         String xmlContent = """
                 <expressions>
                     <expr>1 + 2</expr>
