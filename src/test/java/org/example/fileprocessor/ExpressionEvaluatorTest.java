@@ -93,4 +93,32 @@ public class ExpressionEvaluatorTest {
     void TestMultipleMinus() {
         assertEquals("9", ExpressionEvaluator.evaluate("14---5"));
     }
+    @Test
+    @Severity(SeverityLevel.NORMAL)
+    @Description("Check multiple brackets")
+    void TestMultipleBrackets() {
+        assertEquals("144", ExpressionEvaluator.evaluate("(4+4)*(2+(8*2))"));
+    }
+
+    @Test
+    @Severity(SeverityLevel.MINOR)
+    @Description("Check if *1 equals *1")
+    void TestMultiplyOne() {
+        assertEquals("*1", ExpressionEvaluator.evaluate("*1"));
+    }
+
+    @Test
+    @Severity(SeverityLevel.MINOR)
+    @Description("Check if 1 equals 1")
+    void TestSingleTerm() {
+        assertEquals("1", ExpressionEvaluator.evaluate("1"));
+    }
+
+    @Test
+    @Severity(SeverityLevel.MINOR)
+    @Description("Check if ---1 equals -1")
+    void TestMultipleMinusOne() {
+        assertEquals("-1", ExpressionEvaluator.evaluate("---1"));
+    }
+
 }

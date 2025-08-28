@@ -121,6 +121,7 @@ public class ExpressionEvaluator {
                 continue;
             }
 
+            // Скобки
             if (c == '(' || c == ')') {
                 tokens.add(String.valueOf(c));
                 prevToken = String.valueOf(c);
@@ -128,8 +129,9 @@ public class ExpressionEvaluator {
                 continue;
             }
 
+            // Операторы
             if (c == '+' || c == '-' || c == '*' || c == '/') {
-                // ищем несколько подряд идущих минусов
+                // --- если только + или - — обрабатываем как унарный/суммарный знак
                 if (c == '+' || c == '-') {
                     int j = i;
                     int minusCount = 0;
@@ -138,6 +140,7 @@ public class ExpressionEvaluator {
                         j++;
                     }
                     String finalSign = (minusCount % 2 == 0) ? "+" : "-";
+
                     // Если знак унарный (начало выражения или после оператора/скобки)
                     if ((prevToken == null || isOperator(prevToken) || prevToken.equals("("))
                             && j < n && Character.isDigit(s.charAt(j))) {
@@ -151,14 +154,17 @@ public class ExpressionEvaluator {
                         prevToken = finalSign;
                         i = j;
                     }
-                } else {
-                    tokens.add(String.valueOf(c));
-                    prevToken = String.valueOf(c);
-                    i++;
+                    continue;
                 }
+
+                // --- если оператор * или / — добавляем каждый символ отдельно
+                tokens.add(String.valueOf(c));
+                prevToken = String.valueOf(c);
+                i++;
                 continue;
             }
 
+            // Числа
             if (Character.isDigit(c)) {
                 int j = i;
                 while (j < n && Character.isDigit(s.charAt(j))) j++;
@@ -168,6 +174,7 @@ public class ExpressionEvaluator {
                 continue;
             }
 
+            // Любой другой текстовый токен
             int j = i;
             while (j < n && !Character.isWhitespace(s.charAt(j))
                     && "+-*/()".indexOf(s.charAt(j)) == -1) {
@@ -179,4 +186,5 @@ public class ExpressionEvaluator {
         }
         return tokens;
     }
+
 }
